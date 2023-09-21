@@ -1,0 +1,19 @@
+﻿@foreach (var category in Model.Categories.Data)
+{
+    <div class="col-sm-12 col-md-12 col-lg-12">
+
+        <div class="box">
+
+            <a href="">
+                <div class="img-fluid">
+                    <img src="~/img/@category.ImageUrl" width="100%" height="300px" alt="">
+                </div>
+                <div class="detail-box">
+                    <h6>
+                        @category.CategoryName
+                    </h6>
+                </div>
+            </a>
+        </div>
+    </div>
+}

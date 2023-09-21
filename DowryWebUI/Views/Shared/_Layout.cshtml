@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="theme/images/favicon.png" type="image/x-icon">
+
+    <title>
+        Giftos
+    </title>
+
+    @await Html.PartialAsync("_LayoutCssPartial")
+</head>
+<body>
+    @await Html.PartialAsync("_header")
+    @await Html.PartialAsync("_slider")
+    @await Html.PartialAsync("_products")
+    @await Html.PartialAsync("_categories")
+    @await Html.PartialAsync("_sectionDiv")
+    @await Html.PartialAsync("_sectionWhy")
+    @await Html.PartialAsync("_gift")
+    @await Html.PartialAsync("_contact")
+    @await Html.PartialAsync("_testimonial")
+
+   
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    @await Html.PartialAsync("_footer")
+    @await Html.PartialAsync("_LayoutJsPartial")
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

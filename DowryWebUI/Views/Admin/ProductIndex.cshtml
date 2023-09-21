@@ -1,0 +1,74 @@
+﻿@model ProductListViewModel
+@{
+    ViewBag.Title = "Title";
+    Layout = "_AdminLayout";
+}
+
+<div class="row">
+    <div class="col-12">
+        <a asp-controller="Product" asp-action="Add" class="btn btn-primary">Yeni Ürün Ekle</a>
+        <div class="card">
+
+            <div class="card-header">
+                <h3 class="card-title">Ürünler Listesi</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <table id="example2" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Ürün Adı</th>
+                            <th>Fiyat</th>
+                            <th>Url</th>
+                            <th>İşlemler</th>
+                            <th>Kategori</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var product in Model.Products.Data)
+                        {
+
+                            <tr>
+                                <td>@product.ProductName</td>
+                                <td>@product.UnitPrice</td>
+
+                                <td>
+
+                                    <a asp-controller="Product" asp-action="Update" asp-route-productId="@product.ProductId" value="Update" class="btn btn-warning btn-sm">Güncelle</a>
+
+                                    <a asp-controller="Product" asp-action="Delete" asp-route-id="@product.ProductId" class="btn btn-danger btn-sm">Sil</a>
+
+                                </td>
+                                <td>@product.CategoryName</td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+    <!-- /.col -->
+</div>
+<!-- /.row -->
+<!-- Page specific script -->
+@section TabloScript{
+    <script>
+        $(function () {
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+        });
+    </script>
+}

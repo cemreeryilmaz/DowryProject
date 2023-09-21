@@ -1,0 +1,46 @@
+﻿@model CategoryAddViewModel
+
+@{
+    ViewBag.Title = "Title";
+    Layout = "_AdminLayout";
+}
+
+<!-- Main content -->
+
+<div class="content">
+    <form asp-controller="Category" asp-action="Add" method="post" style="margin-bottom: 10px;margin-top:10px;" enctype="multipart/form-data">
+        <div class="col-md-10">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Kategori Ekle</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label asp-for="Category.CategoryName">Kategori Adı</label>
+                        <input type="text" asp-for="Category.CategoryName" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Category.ImageUrl" class="col-sm-2 col-form-label">Resim</label>
+                        <div class="col-sm-10">
+                            <input type="hidden" asp-for="Category.ImageUrl" />
+                            <img src="~/img/@Model.Category.ImageUrl" width="100" />
+                            <input type="file" name="file" />
+                        </div>
+                    </div>                    
+                </div>
+
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+        <div class="row">
+            <div class="col-10">
+                <input type="submit" value="Kategori Ekle" class="btn btn-success btn-block">
+            </div>
+        </div>
+    </form>
+</div>
+<!-- /.content -->
+@section summernote{
+    <script src="~/admintemplate/plugins/summernote/summernote-bs4.min.js"></script>
+}

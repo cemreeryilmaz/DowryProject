@@ -1,0 +1,107 @@
+﻿@model CategoryUpdateViewModel
+
+@{
+    ViewBag.Title = "Title";
+    Layout = "_AdminLayout";
+}
+@if (TempData["message"] != null)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-danger">
+                @TempData["message"]
+            </div>
+        </div>
+    </div>
+}
+<div class="row">
+    <div class="col-md-4">
+        <form asp-controller="Category" asp-action="Update" method="post" style="margin-bottom: 10px;margin-top:10px;" enctype="multipart/form-data">
+            <input type="hidden" asp-for="Category.CategoryId" />
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Kategori Güncelle</h3>
+
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label asp-for="Category.CategoryName">Ürün Adı</label>
+                        <input type="text" asp-for="Category.CategoryName" class="form-control" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Category.ImageUrl" class="col-sm-2 col-form-label">Resim</label>
+                        <div class="col-sm-10">
+                            <input type="hidden" asp-for="Category.ImageUrl" />
+                            <img src="~/img/@Model.Category.ImageUrl" width="100" />
+                            <input type="file" name="file" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-10" offset-sm-2>
+                            <button type="submit" class="btn btn-primary">Kategori Güncelle</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <div id="products">
+                @for (int i = 0; i < Model.Products.Count; i++)
+                {
+                    <input type="hidden" name="Products[@i].ProductId" value="@Model.Products[i].ProductId" />
+                    <input type="hidden" name="Products[@i].ImageUrl" value="@Model.Products[i].ImageUrl" />
+                    <input type="hidden" name="Products[@i].ProductName" value="@Model.Products[i].ProductName" />
+                    <input type="hidden" name="Products[@i].UnitPrice" value="@Model.Products[i].UnitPrice" />
+                }
+            </div>
+        </form>
+    </div>
+    <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-bordered sm mt-3">
+                    <thead>
+                        <tr>
+                            <th style="width: 10px;">Id</th>
+                            <th style="width: 100px;">Resim</th>
+                            <th>Ürün Adı</th>
+                            <th style="width: 100px;">Fiyat</th>
+                            <th style="width: 250px;">İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Products.Count > 0)
+                        {
+                            @foreach (var product in Model.Products)
+                            {
+                                <tr>
+                                    <td>@product.ProductId</td>
+                                    <td><img src="~/img/@product.ImageUrl" width="80" /></td>
+                                    <td>@product.ProductName</td>
+                                    <td>@product.UnitPrice <i class="fa fa-lira-sign"></i></td>
+
+
+                                    <td>
+                                        <a asp-controller="Product" asp-action="Update" asp-route-productId="@product.ProductId" asp-for="@product.ProductId" value="Update" class="btn btn-warning btn-sm">Güncelle</a>
+
+                                        <form asp-controller="Admin" asp-action="DeleteFromCategory" method="post" style="display:inline">
+                                            <input type="hidden" name="productId" value="@product.ProductId" />
+                                            <input type="hidden" name="categoryId" value="@Model.Category.CategoryId" />
+                                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                        </form>
+
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <div class="alert alert-warning">
+                                <h3>Ürün Yok.</h3>
+                            </div>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

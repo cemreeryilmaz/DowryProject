@@ -1,0 +1,80 @@
+﻿@model CategoryListViewModel
+@{
+    ViewBag.Title = "Title";
+    Layout = "_AdminLayout";
+}
+
+@if (TempData["message"] != null)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-danger">
+                @TempData["message"]
+            </div>
+        </div>
+    </div>
+}
+
+<div class="row">
+    <div class="col-12">
+        <a asp-controller="Category" asp-action="Add" class="btn btn-primary" style="margin-bottom: 10px;margin-top:10px;">Yeni Kategori Ekle</a>
+        <div class="card" style="margin-top: 10px;">
+           
+            <div class="card-header">
+                <h3 class="card-title">Kategori Listesi</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <table id="example2" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th style="width: 10px;">Id</th>
+                            <th style="width: 100px;">Resim</th>
+                            <th>Kategori Adı</th>
+                            <th style="width: 150px;">İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var category in Model.Categories.Data)
+                        {
+                            <tr>
+                                <td>@category.CategoryId</td>
+                                <td><img src="~/img/@category.ImageUrl" width="80" height="80" /></td>
+                                <td>@category.CategoryName</td>
+                                <td>
+                                    <a asp-controller="Category" asp-action="Update" asp-route-categoryId="@category.CategoryId" asp-for="@category.CategoryId" value="Update" class="btn btn-warning btn-sm btn-block">Güncelle</a>
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+    <!-- /.col -->
+</div>
+<!-- /.row -->
+<!-- Page specific script -->
+@section TabloScript{
+    <script>
+        $(function () {
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+        });
+
+    </script>
+}

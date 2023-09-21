@@ -1,0 +1,91 @@
+﻿@model ProductListViewModel
+@{
+    ViewBag.Title = "Title";
+    Layout = "_AdminLayout";
+}
+
+@if (TempData["message"] != null)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-danger">
+                @TempData["message"]
+            </div>
+        </div>
+    </div>
+}
+
+<div class="row">
+    <div class="col-12">
+
+        <a asp-controller="Product" asp-action="Add" class="btn btn-primary" style="margin-bottom: 10px;margin-top:10px;">Yeni Ürün Ekle</a>
+        <div class="card">
+
+            <div class="card-header">
+                <h3 class="card-title">Ürünler Listesi</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <table id="example2" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th style="width: 10px;">Id</th>
+                            <th style="width: 100px;">Resim</th>
+                            <th>Ürün Adı</th>
+                            <th style="width: 100px;">Kategori</th>
+                            <th style="width: 100px;">Fiyat</th>
+                            <th style="width: 150px;">İşlemler</th>
+                        
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var product in Model.Products.Data)
+                        {
+                            <tr>
+                                <td>@product.ProductId</td>
+                                <td><img src="~/img/@product.ImageUrl" width="80" height="80" /></td>
+                                <td>@product.ProductName</td>
+                                <td>@product.CategoryName</td>
+                                <td>@product.UnitPrice<i class="fa fa-lira-sign"></i></td>
+                                <td>
+                                    <a asp-controller="Product" asp-action="Update" asp-route-productId="@product.ProductId" asp-for="@product.ProductId" value="Update" class="btn btn-warning btn-sm">Güncelle</a>
+
+                                    <form action="/Product/DeleteProduct" method="post" style="display:inline">
+                                        <input type="hidden" name="productId" value="@product.ProductId" />
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+    <!-- /.col -->
+</div>
+<!-- /.row -->
+<!-- Page specific script -->
+@section TabloScript{
+    <script>
+        $(function () {
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+        });
+
+    </script>
+}
